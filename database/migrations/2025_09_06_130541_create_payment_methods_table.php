@@ -13,6 +13,12 @@ return new class extends Migration
     {
         Schema::create('payment_methods', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->constrained('users');
+            $table->foreignId('payment_type_id')->constrained('payment_types');
+            $table->string('provider');
+            $table->string('account_number');
+            $table->date('expiry_date');
+            $table->boolean('is_default')->default(false);
             $table->timestamps();
         });
     }

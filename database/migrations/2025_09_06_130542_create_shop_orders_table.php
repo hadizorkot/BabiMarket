@@ -13,6 +13,10 @@ return new class extends Migration
     {
         Schema::create('shop_orders', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->constrained('users');
+            $table->timestamp('order_date');
+            $table->decimal('order_total', 10, 2);
+            $table->foreignId('order_status_id')->constrained('order_status');
             $table->timestamps();
         });
     }
