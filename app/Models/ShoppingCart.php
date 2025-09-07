@@ -9,6 +9,8 @@ class ShoppingCart extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['user_id'];
+
     // ShoppingCart belongs to User
     public function user()
     {

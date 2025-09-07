@@ -9,6 +9,8 @@ class UserReview extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['user_id', 'order_line_id', 'rating', 'comment', 'review_date'];
+
     // UserReview belongs to User
     public function user()
     {

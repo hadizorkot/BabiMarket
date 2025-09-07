@@ -9,6 +9,9 @@ class OrderStatus extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['name', 'description'];
+    
+
     // OrderStatus has many ShopOrders
     public function shopOrders()
     {

@@ -9,6 +9,8 @@ class ShoppingCartItem extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['shopping_cart_id', 'product_item_id', 'quantity', 'added_at'];
+
     // ShoppingCartItem belongs to ShoppingCart
     public function shoppingCart()
     {

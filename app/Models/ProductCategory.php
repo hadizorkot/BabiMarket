@@ -9,6 +9,9 @@ class ProductCategory extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['name', 'description'];
+    
+
     // ProductCategory has many Products
     public function products()
     {

@@ -9,6 +9,8 @@ class UserPaymentMethod extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['user_id', 'payment_type_id', 'details'];
+
     // UserPaymentMethod belongs to User
     public function user()
     {
