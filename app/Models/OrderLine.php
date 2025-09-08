@@ -9,7 +9,7 @@ class OrderLine extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['shop_order_id', 'product_item_id', 'quantity', 'price'];
+    protected $fillable = ['product_item_id', 'order_id','quantity', 'price'];
 
     // OrderLine belongs to ShopOrder
     public function shopOrder()

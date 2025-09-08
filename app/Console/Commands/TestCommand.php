@@ -22,6 +22,9 @@ use App\Models\PaymentMethod;
 use App\Models\ShippingMethod;
 use App\Models\OrderStatus;
 use App\Models\ShopOrder;
+use App\Models\OrderLine;
+use App\Models\UserPaymentMethod;
+use App\Models\UserReview;
 
 
 class TestCommand extends Command
@@ -44,18 +47,15 @@ class TestCommand extends Command
     public function handle()
     {
         
-        $shopOrder = ShopOrder::firstOrCreate([
+        $userReview =   UserReview::firstOrCreate([
             'user_id' => 1,
-            'order_date' => now(),
-            'payment_method_id' => 1,
-            'shipping_address_id' => 1,
-            'shipping_method_id' => 1,
-            'order_total' => 100.00,
-            'order_status' => 1,           
+            'order_line_id' => 1,
+            'rating_value' => 5,
+            'comment' => 'Great product!',
         ]);
 
 
-        $this->info('OrderStatus created: ' . $shippingMethod->name);
+        $this->info('created: ');
 
     }
 }

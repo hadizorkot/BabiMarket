@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained('users');
             $table->timestamp('order_date');
-            $table->foreignId('payment_method_id')->constrained('user_payment_methods');
+            $table->foreignId('payment_method_id')->constrained('payment_methods');
             $table->foreignId('shipping_address_id')->constrained('addresses');
             $table->foreignId('shipping_method_id')->constrained('shipping_methods');
             $table->decimal('order_total');
