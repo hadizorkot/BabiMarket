@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->text('description');
-            $table->decimal('discount_rate', 5, 2);
+            $table->decimal('discount_rate');
             $table->date('start_date');
             $table->date('end_date');
             $table->timestamps();

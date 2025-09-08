@@ -5,11 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class UserPaymentMethod extends Model
+class PaymentMethod extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['user_id', 'payment_type_id', 'details'];
+    protected $fillable = ['user_id', 'payment_type_id', 'provider', 'account_number', 'expiry_date', 'is_default'];
 
     // UserPaymentMethod belongs to User
     public function user()

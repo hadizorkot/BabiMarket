@@ -10,14 +10,14 @@ class Address extends Model
     use HasFactory;
 
     protected $fillable = [
-        'user_id',
-        'country_id',
+        'unit_number',
+        'street_number',
         'address_line1',
         'address_line2',
         'city',
-        'state',
+        'region',
         'postal_code',
-        'is_default',
+        'country_id',
     ];
 
     // Address belongs to User

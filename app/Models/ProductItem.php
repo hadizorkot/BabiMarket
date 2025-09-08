@@ -9,7 +9,7 @@ class ProductItem extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['product_id', 'sku', 'stock', 'price'];  
+    protected $fillable = ['sku','product_id' , 'qty_in_stock', 'price' , 'product_image'];  
 
     // ProductItem belongs to Product
     public function product()

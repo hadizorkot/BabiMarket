@@ -14,11 +14,7 @@ return new class extends Migration
         Schema::create('user_addresses', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained('users');
-            $table->string('address_line1');
-            $table->string('address_line2')->nullable();
-            $table->string('city');
-            $table->string('region');
-            $table->string('postal_code');
+            $table->foreignId('address_id')->constrained('addresses');
             $table->boolean('is_default')->default(false);
             $table->timestamps();
         });

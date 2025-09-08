@@ -9,8 +9,8 @@ class Promotion extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'description', 'discount_percentage', 'start_date', 'end_date'];
-    
+    protected $fillable = ['name', 'description', 'discount_rate', 'start_date', 'end_date'];
+
 
     // Promotion has many Products through PromotionCategory
     public function products()

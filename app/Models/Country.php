@@ -9,7 +9,7 @@ class Country extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'code'];
+    protected $fillable = ['country_name'];
 
     // Country has many UserAddresses
     public function userAddresses()

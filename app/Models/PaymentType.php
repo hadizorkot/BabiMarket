@@ -9,8 +9,8 @@ class PaymentType extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'description'];
-    
+    protected $fillable = ['value'];
+
 
     // PaymentType has many UserPaymentMethods
     public function userPaymentMethods()
