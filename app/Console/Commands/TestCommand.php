@@ -19,6 +19,8 @@ use App\Models\Order;
 use App\Models\OrderItem;   
 use App\Models\PaymentType;
 use App\Models\PaymentMethod;
+use App\Models\ShippingMethod;
+use App\Models\OrderStatus;
 
 
 class TestCommand extends Command
@@ -40,19 +42,14 @@ class TestCommand extends Command
 
     public function handle()
     {
-
-        // Create address
-        $paymentMethod = PaymentMethod::firstOrCreate([
-            'user_id' => 1,
-            'payment_type_id' => 1,
-            'provider' => 'Visa',
-            'account_number' => '4111111111111111',
-            'expiry_date' => '2025-12-31',
-            'is_default' => true
+        
+        $orderStatus = OrderStatus::firstOrCreate([
+            'status' => '1',
+            
         ]);
 
 
-        $this->info('Payment Method created successfully.');
+        $this->info('promosion created successfully.');
 
     }
 }

@@ -9,8 +9,7 @@ class ProductCategory extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'description'];
-    
+    protected $fillable = ['category_name','parent_category_id'];
 
     // ProductCategory has many Products
     public function products()
@@ -23,4 +22,18 @@ class ProductCategory extends Model
     {
         return $this->belongsToMany(Promotion::class, 'promotion_categories');
     }
+    // ProductCategory may have a parent category
+    public function parentCategory()
+    {
+        return $this->belongsTo(ProductCategory::class, 'parent_category_id');      
+
+    }
+
+    // ProductCategory may have many child categories
+    public function childCategories()
+    {
+        return $this->hasMany(ProductCategory::class, 'parent_category_id');    
+
+    }
+    
 }

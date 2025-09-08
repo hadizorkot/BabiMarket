@@ -9,7 +9,7 @@ class ShopOrder extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['user_id', 'payment_method_id', 'shipping_method_id', 'order_status_id', 'total_amount', 'order_date'];
+    protected $fillable = ['user_id', 'order_date',  'payment_method_id', 'shipping_address_id', 'shipping_method_id', 'order_total', 'order_status'];
 
     // ShopOrder belongs to User
     public function user()

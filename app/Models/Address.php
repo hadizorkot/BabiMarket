@@ -17,7 +17,7 @@ class Address extends Model
         'city',
         'region',
         'postal_code',
-        'country_id',
+        'country_name',
     ];
 
     // Address belongs to User
