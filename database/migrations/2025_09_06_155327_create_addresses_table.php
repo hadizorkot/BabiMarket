@@ -15,12 +15,12 @@ return new class extends Migration
         $table->id();
         $table->string('unit_number')->nullable(); // Unit number if applicable
         $table->string('street_number');
+        $table->string('country_name');
         $table->string('address_line1');
         $table->string('address_line2')->nullable();
         $table->string('city');
         $table->string('region')->nullable();
         $table->string('postal_code');
-        $table->foreignId('country_id')->constrained('countries')->onDelete('cascade');
         $table->timestamps();
     });
 }
