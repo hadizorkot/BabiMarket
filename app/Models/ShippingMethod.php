@@ -9,7 +9,7 @@ class ShippingMethod extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'description', 'cost'];
+    protected $fillable = ['name', 'price'];
     
 
     // ShippingMethod has many ShopOrders

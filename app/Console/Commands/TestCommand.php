@@ -21,6 +21,7 @@ use App\Models\PaymentType;
 use App\Models\PaymentMethod;
 use App\Models\ShippingMethod;
 use App\Models\OrderStatus;
+use App\Models\ShopOrder;
 
 
 class TestCommand extends Command
@@ -43,13 +44,18 @@ class TestCommand extends Command
     public function handle()
     {
         
-        $orderStatus = OrderStatus::firstOrCreate([
-            'status' => '1',
-            
+        $shopOrder = ShopOrder::firstOrCreate([
+            'user_id' => 1,
+            'order_date' => now(),
+            'payment_method_id' => 1,
+            'shipping_address_id' => 1,
+            'shipping_method_id' => 1,
+            'order_total' => 100.00,
+            'order_status' => 1,           
         ]);
 
 
-        $this->info('promosion created successfully.');
+        $this->info('OrderStatus created: ' . $shippingMethod->name);
 
     }
 }
