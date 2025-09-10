@@ -46,16 +46,6 @@ class TestCommand extends Command
 
     public function handle()
     {
-        
-        $userReview =   UserReview::firstOrCreate([
-            'user_id' => 1,
-            'order_line_id' => 1,
-            'rating_value' => 5,
-            'comment' => 'Great product!',
-        ]);
-
-
-        $this->info('created: ');
 
     }
 }
