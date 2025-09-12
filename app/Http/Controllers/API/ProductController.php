@@ -48,7 +48,7 @@ class ProductController extends Controller
      */
     public function show(string $id)
     {
-        $product = \App\Models\Product::with('category')->find($id);
+        $product = \App\Models\Product::find($id);
         if (!$product) {
             return response()->json([
                 'success' => false,

@@ -29,7 +29,7 @@ class PromotionCategoryController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'category_id' => 'required|exists:categories,id',
+            'category_id' => 'required|exists:product_categories,id',
             'promotion_id' => 'required|exists:promotions,id',
         ]);
 
@@ -81,7 +81,7 @@ class PromotionCategoryController extends Controller
         }
 
         $validatedData = $request->validate([
-            'category_id' => 'required|exists:categories,id',
+            'category_id' => 'required|exists:product_categories,id',
             'promotion_id' => 'required|exists:promotions,id',
         ]);
 
