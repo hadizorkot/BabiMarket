@@ -117,3 +117,12 @@ Route::post('/shopping-cart-items', [\App\Http\Controllers\API\ShoppingCartItemC
 Route::get('/shopping-cart-items/{id}', [\App\Http\Controllers\API\ShoppingCartItemController::class, 'show']);
 Route::put('/shopping-cart-items/{id}', [\App\Http\Controllers\API\ShoppingCartItemController::class, 'update']);
 Route::delete('/shopping-cart-items/{id}', [\App\Http\Controllers\API\ShoppingCartItemController::class, 'destroy']);
+
+
+
+// Shipping Method Management Routes
+Route::get('/shipping-methods', [\App\Http\Controllers\API\ShippingMethodController::class, 'index']);
+Route::post('/shipping-methods', [\App\Http\Controllers\API\ShippingMethodController::class, 'store']);
+Route::get('/shipping-methods/{id}', [\App\Http\Controllers\API\ShippingMethodController::class, 'show']);
+Route::put('/shipping-methods/{id}', [\App\Http\Controllers\API\ShippingMethodController::class, 'update']);
+Route::delete('/shipping-methods/{id}', [\App\Http\Controllers\API\ShippingMethodController::class, 'destroy']);
