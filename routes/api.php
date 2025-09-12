@@ -41,4 +41,22 @@ Route::put('/user-addresses/{id}', [UserAddressController::class, 'update']);
 Route::delete('/user-addresses/{id}', [UserAddressController::class, 'destroy']);
 
 
+// Promotion Management Routes
+Route::get('/promotions', [\App\Http\Controllers\API\PromotionController::class, 'index']);
+Route::post('/promotions', [\App\Http\Controllers\API\PromotionController::class, 'store']);
+Route::get('/promotions/{id}', [\App\Http\Controllers\API\PromotionController::class, 'show']);
+Route::put('/promotions/{id}', [\App\Http\Controllers\API\PromotionController::class, 'update']);
+Route::delete('/promotions/{id}', [\App\Http\Controllers\API\PromotionController::class, 'destroy']);
+
+
+// Promotion Category Management Routes
+Route::get('/promotion-categories', [\App\Http\Controllers\API\PromotionCategoryController::class, 'index']);
+Route::post('/promotion-categories', [\App\Http\Controllers\API\PromotionCategoryController::class, 'store']);
+Route::get('/promotion-categories/{id}', [\App\Http\Controllers\API\PromotionCategoryController::class, 'show']);
+Route::put('/promotion-categories/{id}', [\App\Http\Controllers\API\PromotionCategoryController::class, 'update']);
+Route::delete('/promotion-categories/{id}', [\App\Http\Controllers\API\PromotionCategoryController::class, 'destroy']);
+
+
+
+
 
