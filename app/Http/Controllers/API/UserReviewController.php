@@ -12,23 +12,35 @@ class UserReviewController extends Controller
      */
     public function index()
     {
-        //
+        $userReviews = \App\Models\UserReview::all();
+        return response()->json([
+            'success' => true,
+            'data' => $userReviews,
+            'message' => 'User Reviews retrieved successfully'
+        ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
+   
 
     /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
     {
-        //
+        $validatedData = $request->validate([
+            'user_id' => 'required|exists:users,id',
+            'order_line_id' => 'required|exists:order_lines,id',
+            'rating_value' => 'required|integer|min:1|max:5',
+            'comment' => 'sometimes|nullable|string|max:1000',
+        ]);
+
+        $userReview = \App\Models\UserReview::create($validatedData);
+
+        return response()->json([
+            'success' => true,
+            'data' => $userReview,
+            'message' => 'User Review created successfully'
+        ], 201);
     }
 
     /**
@@ -36,23 +48,50 @@ class UserReviewController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $userReview = \App\Models\UserReview::find($id);
+        if (!$userReview) {
+            return response()->json([
+                'success' => false,
+                'message' => 'User Review not found'
+            ], 404);
+        }
+
+        return response()->json([
+            'success' => true,
+            'data' => $userReview,
+            'message' => 'User Review retrieved successfully'
+        ]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
+  
 
     /**
      * Update the specified resource in storage.
      */
     public function update(Request $request, string $id)
     {
-        //
+        $userReview = \App\Models\UserReview::find($id);
+        if (!$userReview) {
+            return response()->json([
+                'success' => false,
+                'message' => 'User Review not found'
+            ], 404);
+        }
+
+        $validatedData = $request->validate([
+            'user_id' => 'sometimes|exists:users,id',
+            'order_line_id' => 'sometimes|exists:order_lines,id',
+            'rating_value' => 'sometimes|integer|min:1|max:5',
+            'comment' => 'sometimes|nullable|string|max:1000',
+        ]);
+
+        $userReview->update($validatedData);
+
+        return response()->json([
+            'success' => true,
+            'data' => $userReview,
+            'message' => 'User Review updated successfully'
+        ]);
     }
 
     /**
@@ -60,6 +99,19 @@ class UserReviewController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $userReview = \App\Models\UserReview::find($id);
+        if (!$userReview) {
+            return response()->json([
+                'success' => false,
+                'message' => 'User Review not found'
+            ], 404);
+        }
+
+        $userReview->delete();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'User Review deleted successfully'
+        ]);
     }
 }

@@ -153,3 +153,12 @@ Route::post('/order-lines', [\App\Http\Controllers\API\OrderLineController::clas
 Route::get('/order-lines/{id}', [\App\Http\Controllers\API\OrderLineController::class, 'show']);
 Route::put('/order-lines/{id}', [\App\Http\Controllers\API\OrderLineController::class, 'update']);
 Route::delete('/order-lines/{id}', [\App\Http\Controllers\API\OrderLineController::class, 'destroy']);
+
+
+
+// User Review Management Routes
+Route::get('/user-reviews', [\App\Http\Controllers\API\UserReviewController::class, 'index']);
+Route::post('/user-reviews', [\App\Http\Controllers\API\UserReviewController::class, 'store']);
+Route::get('/user-reviews/{id}', [\App\Http\Controllers\API\UserReviewController::class, 'show']);
+Route::put('/user-reviews/{id}', [\App\Http\Controllers\API\UserReviewController::class, 'update']);
+Route::delete('/user-reviews/{id}', [\App\Http\Controllers\API\UserReviewController::class, 'destroy']);
