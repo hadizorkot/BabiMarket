@@ -126,3 +126,12 @@ Route::post('/shipping-methods', [\App\Http\Controllers\API\ShippingMethodContro
 Route::get('/shipping-methods/{id}', [\App\Http\Controllers\API\ShippingMethodController::class, 'show']);
 Route::put('/shipping-methods/{id}', [\App\Http\Controllers\API\ShippingMethodController::class, 'update']);
 Route::delete('/shipping-methods/{id}', [\App\Http\Controllers\API\ShippingMethodController::class, 'destroy']);
+
+
+
+// Order Status Management Routes
+Route::get('/order-statuses', [\App\Http\Controllers\API\OrderStatusController::class, 'index']);
+Route::post('/order-statuses', [\App\Http\Controllers\API\OrderStatusController::class, 'store']);
+Route::get('/order-statuses/{id}', [\App\Http\Controllers\API\OrderStatusController::class, 'show']);
+Route::put('/order-statuses/{id}', [\App\Http\Controllers\API\OrderStatusController::class, 'update']);
+Route::delete('/order-statuses/{id}', [\App\Http\Controllers\API\OrderStatusController::class, 'destroy']);
