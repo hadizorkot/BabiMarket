@@ -1,0 +1,114 @@
+<?php
+
+namespace App\Http\Controllers\API;
+
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+
+class PaymentTypeController extends Controller
+{
+    /**
+     * Display a listing of the resource.
+     */
+    public function index()
+    {
+        
+        $paymentTypes = \App\Models\PaymentType::all();
+        return response()->json([
+            'success' => true,
+            'data' => $paymentTypes,
+            'message' => 'Payment Types retrieved successfully'
+        ]);
+    }
+
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(Request $request)
+    {
+        $validatedData = $request->validate([
+            'value' => 'required|string|max:100|unique:payment_types,value',
+        ]);
+
+        $paymentType = \App\Models\PaymentType::create($validatedData);
+
+        return response()->json([
+            'success' => true,
+            'data' => $paymentType,
+            'message' => 'Payment Type created successfully'
+        ], 201);
+    }
+
+    /**
+     * Display the specified resource.
+     */
+    public function show(string $id)
+    {
+        
+        $paymentType = \App\Models\PaymentType::find($id);
+        if (!$paymentType) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Payment Type not found'
+            ], 404);
+        }
+
+        return response()->json([
+            'success' => true,
+            'data' => $paymentType,
+            'message' => 'Payment Type retrieved successfully'
+        ]);
+    }
+
+    
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, string $id)
+    {
+        
+        $paymentType = \App\Models\PaymentType::find($id);
+        if (!$paymentType) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Payment Type not found'
+            ], 404);
+        }
+
+        $validatedData = $request->validate([
+            'value' => 'required|string|max:100|unique:payment_types,value,' . $id,
+        ]);
+
+        $paymentType->update($validatedData);
+
+        return response()->json([
+            'success' => true,
+            'data' => $paymentType,
+            'message' => 'Payment Type updated successfully'
+        ]);
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(string $id)
+    {
+        
+        $paymentType = \App\Models\PaymentType::find($id);
+        if (!$paymentType) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Payment Type not found'
+            ], 404);
+        }
+
+        $paymentType->delete();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Payment Type deleted successfully'
+        ]);
+    }
+}

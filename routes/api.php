@@ -81,3 +81,12 @@ Route::post('/product-items', [\App\Http\Controllers\API\ProductItemController::
 Route::get('/product-items/{id}', [\App\Http\Controllers\API\ProductItemController::class, 'show']);
 Route::put('/product-items/{id}', [\App\Http\Controllers\API\ProductItemController::class, 'update']);
 Route::delete('/product-items/{id}', [\App\Http\Controllers\API\ProductItemController::class, 'destroy']);
+
+
+
+// Payment Type Management Routes
+Route::get('/payment-types', [\App\Http\Controllers\API\PaymentTypeController::class, 'index']);
+Route::post('/payment-types', [\App\Http\Controllers\API\PaymentTypeController::class, 'store']);
+Route::get('/payment-types/{id}', [\App\Http\Controllers\API\PaymentTypeController::class, 'show']);
+Route::put('/payment-types/{id}', [\App\Http\Controllers\API\PaymentTypeController::class, 'update']);
+Route::delete('/payment-types/{id}', [\App\Http\Controllers\API\PaymentTypeController::class, 'destroy']);
