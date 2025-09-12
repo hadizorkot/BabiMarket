@@ -101,3 +101,10 @@ Route::put('/payment-methods/{id}', [\App\Http\Controllers\API\PaymentMethodCont
 Route::delete('/payment-methods/{id}', [\App\Http\Controllers\API\PaymentMethodController::class, 'destroy']);
 
 
+
+// Shopping Cart Management Routes
+Route::get('/shopping-carts', [\App\Http\Controllers\API\ShoppingCartController::class, 'index']);
+Route::post('/shopping-carts', [\App\Http\Controllers\API\ShoppingCartController::class, 'store']);
+Route::get('/shopping-carts/{id}', [\App\Http\Controllers\API\ShoppingCartController::class, 'show']);
+Route::put('/shopping-carts/{id}', [\App\Http\Controllers\API\ShoppingCartController::class, 'update']);
+Route::delete('/shopping-carts/{id}', [\App\Http\Controllers\API\ShoppingCartController::class, 'destroy']);
