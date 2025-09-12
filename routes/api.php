@@ -144,3 +144,12 @@ Route::post('/shop-orders', [\App\Http\Controllers\API\ShopOrderController::clas
 Route::get('/shop-orders/{id}', [\App\Http\Controllers\API\ShopOrderController::class, 'show']);
 Route::put('/shop-orders/{id}', [\App\Http\Controllers\API\ShopOrderController::class, 'update']);
 Route::delete('/shop-orders/{id}', [\App\Http\Controllers\API\ShopOrderController::class, 'destroy']);
+
+
+
+// Order Line Management Routes
+Route::get('/order-lines', [\App\Http\Controllers\API\OrderLineController::class, 'index']);
+Route::post('/order-lines', [\App\Http\Controllers\API\OrderLineController::class, 'store']);
+Route::get('/order-lines/{id}', [\App\Http\Controllers\API\OrderLineController::class, 'show']);
+Route::put('/order-lines/{id}', [\App\Http\Controllers\API\OrderLineController::class, 'update']);
+Route::delete('/order-lines/{id}', [\App\Http\Controllers\API\OrderLineController::class, 'destroy']);
