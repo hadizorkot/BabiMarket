@@ -81,8 +81,8 @@ class PromotionCategoryController extends Controller
         }
 
         $validatedData = $request->validate([
-            'name' => 'sometimes|required|string|max:255',
-            'description' => 'nullable|string'
+            'category_id' => 'required|exists:categories,id',
+            'promotion_id' => 'required|exists:promotions,id',
         ]);
 
         $promotionCategory->update($validatedData);

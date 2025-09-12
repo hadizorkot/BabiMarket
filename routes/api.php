@@ -58,5 +58,10 @@ Route::delete('/promotion-categories/{id}', [\App\Http\Controllers\API\Promotion
 
 
 
-
+// Product Management Routes
+Route::get('/products', [\App\Http\Controllers\API\ProductController::class, 'index']);
+Route::post('/products', [\App\Http\Controllers\API\ProductController::class, 'store']);
+Route::get('/products/{id}', [\App\Http\Controllers\API\ProductController::class, 'show']);
+Route::put('/products/{id}', [\App\Http\Controllers\API\ProductController::class, 'update']);
+Route::delete('/products/{id}', [\App\Http\Controllers\API\ProductController::class, 'destroy']);
 
