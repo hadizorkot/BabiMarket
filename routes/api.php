@@ -72,3 +72,12 @@ Route::post('/product-categories', [\App\Http\Controllers\API\ProductCategoryCon
 Route::get('/product-categories/{id}', [\App\Http\Controllers\API\ProductCategoryController::class, 'show']);
 Route::put('/product-categories/{id}', [\App\Http\Controllers\API\ProductCategoryController::class, 'update']);
 Route::delete('/product-categories/{id}', [\App\Http\Controllers\API\ProductCategoryController::class, 'destroy']); 
+
+
+
+// Product Item Management Routes
+Route::get('/product-items', [\App\Http\Controllers\API\ProductItemController::class, 'index']);
+Route::post('/product-items', [\App\Http\Controllers\API\ProductItemController::class, 'store']);
+Route::get('/product-items/{id}', [\App\Http\Controllers\API\ProductItemController::class, 'show']);
+Route::put('/product-items/{id}', [\App\Http\Controllers\API\ProductItemController::class, 'update']);
+Route::delete('/product-items/{id}', [\App\Http\Controllers\API\ProductItemController::class, 'destroy']);
