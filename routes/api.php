@@ -108,3 +108,12 @@ Route::post('/shopping-carts', [\App\Http\Controllers\API\ShoppingCartController
 Route::get('/shopping-carts/{id}', [\App\Http\Controllers\API\ShoppingCartController::class, 'show']);
 Route::put('/shopping-carts/{id}', [\App\Http\Controllers\API\ShoppingCartController::class, 'update']);
 Route::delete('/shopping-carts/{id}', [\App\Http\Controllers\API\ShoppingCartController::class, 'destroy']);
+
+
+
+// Shopping Cart Item Management Routes
+Route::get('/shopping-cart-items', [\App\Http\Controllers\API\ShoppingCartItemController::class, 'index']);
+Route::post('/shopping-cart-items', [\App\Http\Controllers\API\ShoppingCartItemController::class, 'store']);
+Route::get('/shopping-cart-items/{id}', [\App\Http\Controllers\API\ShoppingCartItemController::class, 'show']);
+Route::put('/shopping-cart-items/{id}', [\App\Http\Controllers\API\ShoppingCartItemController::class, 'update']);
+Route::delete('/shopping-cart-items/{id}', [\App\Http\Controllers\API\ShoppingCartItemController::class, 'destroy']);
