@@ -90,3 +90,14 @@ Route::post('/payment-types', [\App\Http\Controllers\API\PaymentTypeController::
 Route::get('/payment-types/{id}', [\App\Http\Controllers\API\PaymentTypeController::class, 'show']);
 Route::put('/payment-types/{id}', [\App\Http\Controllers\API\PaymentTypeController::class, 'update']);
 Route::delete('/payment-types/{id}', [\App\Http\Controllers\API\PaymentTypeController::class, 'destroy']);
+
+
+
+// Payment Method Management Routes
+Route::get('/payment-methods', [\App\Http\Controllers\API\PaymentMethodController::class, 'index']);
+Route::post('/payment-methods', [\App\Http\Controllers\API\PaymentMethodController::class, 'store']);
+Route::get('/payment-methods/{id}', [\App\Http\Controllers\API\PaymentMethodController::class, 'show']);
+Route::put('/payment-methods/{id}', [\App\Http\Controllers\API\PaymentMethodController::class, 'update']);
+Route::delete('/payment-methods/{id}', [\App\Http\Controllers\API\PaymentMethodController::class, 'destroy']);
+
+
