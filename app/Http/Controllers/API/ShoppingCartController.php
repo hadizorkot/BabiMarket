@@ -47,7 +47,7 @@ class ShoppingCartController extends Controller
      */
     public function show(string $id)
     {
-        $shoppingCart = \App\Models\ShoppingCart::with(['user', 'items.productItem'])->find($id);
+        $shoppingCart = \App\Models\ShoppingCart::find($id);
         if (!$shoppingCart) {
             return response()->json([
                 'success' => false,

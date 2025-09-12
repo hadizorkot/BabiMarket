@@ -55,7 +55,7 @@ class UserAddressController extends Controller
      */
     public function show(string $id)
     {
-        $userAddress = \App\Models\UserAddress::with(['user', 'address'])->find($id);
+        $userAddress = \App\Models\UserAddress::find($id);
         if (!$userAddress) {
             return response()->json([
                 'success' => false,
