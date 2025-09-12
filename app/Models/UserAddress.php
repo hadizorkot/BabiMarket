@@ -21,9 +21,10 @@ class UserAddress extends Model
         return $this->belongsTo(User::class);
     }
 
-    // UserAddress belongs to Country
-    public function country()
+    // UserAddress belongs to Address
+    public function address()
     {
-        return $this->belongsTo(Country::class);
+        return $this->belongsTo(Address::class);
+    
     }
 }

@@ -13,10 +13,16 @@ return new class extends Migration
     {
         Schema::create('user_addresses', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained('users');
-            $table->foreignId('address_id')->constrained('addresses');
-            $table->boolean('is_default')->default(false);
-            $table->timestamps();
+            $table->foreignId('user_id')  // Foreign key for user_id
+                ->constrained('users')  // Reference to the users table
+                ->onDelete('cascade');  // Cascade delete when a user is deleted
+
+            $table->foreignId('address_id')  // Foreign key for address_id
+                ->constrained('addresses')  // Reference to the addresses table
+                ->onDelete('cascade');  // Cascade delete when an address is deleted
+
+            $table->boolean('is_default')->default(false);  // Default address flag
+            $table->timestamps();  // Created and updated timestamps
         });
     }
 
