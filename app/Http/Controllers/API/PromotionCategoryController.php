@@ -27,20 +27,47 @@ class PromotionCategoryController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-    {
-        $validatedData = $request->validate([
-            'category_id' => 'required|exists:product_categories,id',
-            'promotion_id' => 'required|exists:promotions,id',
-        ]);
+{
+    // Validate the request data directly inside the store method
+    $request->validate([
+        'category_id' => 'required|exists:product_categories,id',
+        'promotion_id' => 'required|exists:promotions,id',
+    ]);
 
-        $promotionCategory = \App\Models\PromotionCategory::create($validatedData);
+    // Check if the combination already exists in the promotion_categories table
+    $existingPromotionCategory = \App\Models\PromotionCategory::where('promotion_id', $request->promotion_id)
+                                                              ->where('category_id', $request->category_id)
+                                                              ->first();
+
+    // If the combination exists, return an error
+    if ($existingPromotionCategory) {
+        return response()->json([
+            'success' => false,
+            'message' => 'This Promotion Category combination already exists.'
+        ], 400);
+    }
+
+    // If the combination doesn't exist, create a new PromotionCategory
+    try {
+        $promotionCategory = \App\Models\PromotionCategory::create([
+            'category_id' => $request->category_id,
+            'promotion_id' => $request->promotion_id,
+        ]);
 
         return response()->json([
             'success' => true,
             'data' => $promotionCategory,
             'message' => 'Promotion Category created successfully'
         ], 201);
+    } catch (\Exception $e) {
+        return response()->json([
+            'success' => false,
+            'message' => 'Error creating Promotion Category: ' . $e->getMessage()
+        ], 500);
     }
+}
+
+
 
     /**
      * Display the specified resource.
@@ -69,30 +96,57 @@ class PromotionCategoryController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
-    {
-        
-        $promotionCategory = \App\Models\PromotionCategory::find($id);
-        if (!$promotionCategory) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Promotion Category not found'
-            ], 404);
-        }
+   public function update(Request $request, string $id)
+{
+    $promotionCategory = \App\Models\PromotionCategory::find($id);
+    if (!$promotionCategory) {
+        return response()->json([
+            'success' => false,
+            'message' => 'Promotion Category not found'
+        ], 404);
+    }
 
-        $validatedData = $request->validate([
-            'category_id' => 'required|exists:product_categories,id',
-            'promotion_id' => 'required|exists:promotions,id',
+    // Validate the request data directly inside the update method
+    $request->validate([
+        'category_id' => 'required|exists:product_categories,id',
+        'promotion_id' => 'required|exists:promotions,id',
+    ]);
+
+    // Check if the combination already exists for any other PromotionCategory (except the current one being updated)
+    $existingPromotionCategory = \App\Models\PromotionCategory::where('promotion_id', $request->promotion_id)
+                                                              ->where('category_id', $request->category_id)
+                                                              ->where('id', '!=', $id)  // Exclude the current record
+                                                              ->first();
+
+    // If the combination exists, return an error
+    if ($existingPromotionCategory) {
+        return response()->json([
+            'success' => false,
+            'message' => 'This Promotion Category combination already exists.'
+        ], 400);
+    }
+
+    // If the combination doesn't exist, update the PromotionCategory
+    try {
+        $promotionCategory->update([
+            'category_id' => $request->category_id,
+            'promotion_id' => $request->promotion_id,
         ]);
-
-        $promotionCategory->update($validatedData);
 
         return response()->json([
             'success' => true,
             'data' => $promotionCategory,
             'message' => 'Promotion Category updated successfully'
         ]);
+    } catch (\Exception $e) {
+        return response()->json([
+            'success' => false,
+            'message' => 'Error updating Promotion Category: ' . $e->getMessage()
+        ], 500);
     }
+}
+
+
 
     /**
      * Remove the specified resource from storage.
