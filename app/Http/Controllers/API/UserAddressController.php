@@ -98,7 +98,7 @@ class UserAddressController extends Controller
     }
 
     $validatedData = $request->validate([
-        'user_id' => 'sometimes|exists:users,id',
+        'user_id' => 'required|exists:users,id',
         'address_id' => 'required|exists:addresses,id', // Ensure address_id is required
         'is_default' => 'sometimes|boolean'
     ]);
