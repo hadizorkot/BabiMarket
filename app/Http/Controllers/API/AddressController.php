@@ -31,12 +31,18 @@ class AddressController extends Controller
         $validatedData = $request->validate([
             'unit_number' => 'nullable|string|max:50',
             'street_number' => 'nullable|string|max:50',
-            'country_name' => 'nullable|string|max:255',
-            'address_line1' => 'required|string|max:255',
+            'country_name' => 'sometimes|string|max:255',
+            'address_line1' => 'sometimes|required|string|max:255',
             'address_line2' => 'nullable|string|max:255',
-            'city' => 'required|string|max:100',
+            'city' => 'sometimes|required|string|max:100',
             'region' => 'nullable|string|max:100',
-            'postal_code' => 'required|string|max:20|regex:/^[A-Za-z0-9]+$/',
+            'postal_code' => 'sometimes|required|string|max:20',
+            ], [
+                'address_line1.required' => 'Address line 1 is required',
+                'postal_code.required' => 'Postal code is required',
+                'city.required' => 'City is required',
+
+            
         ]);
 
         $address = \App\Models\Address::create($validatedData);
