@@ -30,7 +30,7 @@ class PromotionController extends Controller
         
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
-            'description' => 'nullable|string',
+            'description' => 'nullable|string|max:255',
             'discount_rate' => 'required|numeric|min:0|max:100',
             'start_date' => 'required|date',
             'end_date' => 'required|date|after_or_equal:start_date'
@@ -80,12 +80,13 @@ class PromotionController extends Controller
         }
 
         $validatedData = $request->validate([
-            'name' => 'sometimes|required|string|max:255',
-            'description' => 'sometimes|nullable|string',
-            'discount_rate' => 'sometimes|required|numeric|min:0|max:100',
-            'start_date' => 'sometimes|required|date',
-            'end_date' => 'sometimes|required|date|after_or_equal:start_date'
-        ]);
+    'name' => 'required|string|max:255',
+    'description' => 'nullable|string|max:255',  // Ensure description is optional
+    'discount_rate' => 'required|numeric|min:0|max:100',
+    'start_date' => 'required|date',
+    'end_date' => 'required|date|after_or_equal:start_date'
+]);
+
 
         $promotion->update($validatedData);
 
