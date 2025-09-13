@@ -24,16 +24,15 @@ class ProductCategory extends Model
     }
     // ProductCategory may have a parent category
     public function parentCategory()
-    {
-        return $this->belongsTo(ProductCategory::class, 'parent_category_id');      
+{
+    return $this->belongsTo(ProductCategory::class, 'parent_category_id')->onDelete('cascade');
+}
 
-    }
+public function childCategories()
+{
+    return $this->hasMany(ProductCategory::class, 'parent_category_id')->onDelete('cascade');
+}
 
-    // ProductCategory may have many child categories
-    public function childCategories()
-    {
-        return $this->hasMany(ProductCategory::class, 'parent_category_id');    
 
-    }
     
 }
