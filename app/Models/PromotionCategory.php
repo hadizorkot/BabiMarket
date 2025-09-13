@@ -15,16 +15,15 @@ class PromotionCategory extends Model
 
 
     // PromotionCategory belongs to ProductCategory
-    public function productCategory()
+    public function category()
     {
-        return $this->belongsTo(ProductCategory::class, 'category_id');
-
+        return $this->belongsTo(ProductCategory::class, 'category_id')->onDelete('cascade');  
     }
 
-
     // PromotionCategory belongs to Promotion
-    public function promotion(){
-        return $this->belongsTo(Promotion::class, 'promotion_id');  
+    public function promotion()
+    {
+        return $this->belongsTo(Promotion::class)->onDelete('cascade');  
     }
 
 
