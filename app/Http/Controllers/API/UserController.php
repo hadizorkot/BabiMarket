@@ -30,9 +30,12 @@ class UserController extends Controller
         
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
-            'email_address' => 'required|string|email|max:255|unique:users',
-            'phone_number' => 'required|string|max:15|unique:users',
+            'email_address' => 'required|string|email|max:255|unique:users,email_address',
+            'phone_number' => 'required|string|max:15|unique:users,phone_number',
             'password' => 'required|string|min:8',
+    ], [
+            'email_address.unique' => 'This email address is already taken. Please choose another.',
+            'password.min' => 'Password must be at least 8 characters.',
         ]);
 
         $user = \App\Models\User::create([
@@ -79,10 +82,13 @@ class UserController extends Controller
     {
 
         $validatedData = $request->validate([
-            'name' => 'sometimes|required|string|max:255',
-            'email_address' => 'sometimes|required|string|email|max:255|unique:users,email_address,'.$id,
-            'phone_number' => 'sometimes|required|string|max:15|unique:users,phone_number,'.$id,
-            'password' => 'sometimes|required|string|min:8',
+    'name' => 'required|string|max:255',
+    'email_address' => 'required|string|email|max:255|unique:users,email_address',
+    'phone_number' => 'required|string|max:15|unique:users,phone_number',
+    'password' => 'required|string|min:8',
+], [
+    'email_address.unique' => 'This email address is already taken. Please choose another.',
+    'password.min' => 'Password must be at least 8 characters.',
         ]);
 
 
