@@ -13,13 +13,14 @@ return new class extends Migration
 {
     Schema::create('products', function (Blueprint $table) {
         $table->id();
-        $table->foreignId('category_id')->constrained('product_categories')->onDelete('cascade');
+        $table->foreignId('category_id')->constrained('product_categories')->onDelete('cascade'); // Cascade delete on product category
         $table->string('name');
         $table->text('description');
-        $table->string('product_image')->nullable(); // Store the image URL/path
+        $table->string('product_image')->nullable();
         $table->timestamps();
     });
 }
+
 
 public function down()
 {

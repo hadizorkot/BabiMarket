@@ -25,23 +25,45 @@ class ProductController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-    {
-        
-        $validatedData = $request->validate([
-            'category_id' => 'required|exists:product_categories,id',
-            'name' => 'required|string|max:255',
-            'description' => 'nullable|string',
-            'product_image' => 'nullable|url',
-        ]);
+{
+    // Validate the input data
+    $validatedData = $request->validate([
+        'category_id' => 'required|exists:product_categories,id', // Ensure category exists
+        'name' => 'required|string|max:255',
+        'description' => 'nullable|string',
+        'product_image' => 'nullable|url', // Ensure product_image is a valid URL or null
+    ]);
 
+    // Check if a product with the same category_id, name, and description already exists
+    $existingProduct = \App\Models\Product::where('category_id', $request->category_id)
+                                          ->where('name', $request->name)
+                                          ->where('description', $request->description)
+                                          ->first();
+
+    // If a product with the same category_id, name, and description exists, return an error
+    if ($existingProduct) {
+        return response()->json([
+            'success' => false,
+            'message' => 'A product with this name and description already exists in this category.'
+        ], 400);
+    }
+
+    // If no duplicate exists, create the product
+    try {
         $product = \App\Models\Product::create($validatedData);
-
         return response()->json([
             'success' => true,
             'data' => $product,
             'message' => 'Product created successfully'
         ], 201);
+    } catch (\Exception $e) {
+        return response()->json([
+            'success' => false,
+            'message' => 'Error creating Product: ' . $e->getMessage()
+        ], 500);
     }
+}
+
 
     /**
      * Display the specified resource.
@@ -68,30 +90,54 @@ class ProductController extends Controller
      * Update the specified resource in storage.
      */
     public function update(Request $request, string $id)
-    {
-        $product = \App\Models\Product::find($id);
-        if (!$product) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Product not found'
-            ], 404);
-        }
+{
+    // Find the product
+    $product = \App\Models\Product::find($id);
+    if (!$product) {
+        return response()->json([
+            'success' => false,
+            'message' => 'Product not found'
+        ], 404);
+    }
 
-        $validatedData = $request->validate([
-            'category_id' => 'sometimes|required|exists:product_categories,id',
-            'name' => 'sometimes|required|string|max:255',
-            'description' => 'nullable|string',
-            'product_image' => 'nullable|url',
-        ]);
+    // Validate the input data
+    $validatedData = $request->validate([
+        'category_id' => 'required|exists:product_categories,id', // Ensure category exists
+        'name' => 'required|string|max:255',
+        'description' => 'nullable|string',
+        'product_image' => 'nullable|url', // Ensure product_image is a valid URL or null
+    ]);
 
+    // Check if another product with the same category_id, name, and description exists (excluding the current product)
+    $existingProduct = \App\Models\Product::where('category_id', $request->category_id)
+                                          ->where('name', $request->name)
+                                          ->where('description', $request->description)
+                                          ->where('id', '!=', $id) // Exclude current product
+                                          ->first();
+
+    // If a product with the same category_id, name, and description exists, return an error
+    if ($existingProduct) {
+        return response()->json([
+            'success' => false,
+            'message' => 'A product with this name and description already exists in this category.'
+        ], 400);
+    }
+
+    // If no duplicate exists, update the product
+    try {
         $product->update($validatedData);
-
         return response()->json([
             'success' => true,
             'data' => $product,
             'message' => 'Product updated successfully'
         ]);
+    } catch (\Exception $e) {
+        return response()->json([
+            'success' => false,
+            'message' => 'Error updating Product: ' . $e->getMessage()
+        ], 500);
     }
+}
 
     /**
      * Remove the specified resource from storage.
