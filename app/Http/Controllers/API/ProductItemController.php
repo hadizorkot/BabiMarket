@@ -81,8 +81,8 @@ class ProductItemController extends Controller
         }
 
         $validatedData = $request->validate([
-            'product_id' => 'sometimes|required|exists:products,id',
             'sku' => 'sometimes|required|string|max:100|unique:product_items,sku,' . $id,
+            'product_id' => 'sometimes|required|exists:products,id',
             'price' => 'sometimes|required|numeric|min:0',
             'stock_quantity' => 'sometimes|required|integer|min:0',
         ]);
