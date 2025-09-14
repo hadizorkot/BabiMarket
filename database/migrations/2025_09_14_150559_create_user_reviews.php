@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('user_reviews', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained('users');
-            $table->foreignId('order_line_id')->constrained('order_lines');
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');  // Cascade delete when user is deleted
+            $table->foreignId('order_line_id')->constrained('order_lines')->onDelete('cascade');  // Cascade delete when order line is deleted
             $table->integer('rating_value');
-            $table->text('comment');
+            $table->text('comment')->nullable();
             $table->timestamps();
         });
     }

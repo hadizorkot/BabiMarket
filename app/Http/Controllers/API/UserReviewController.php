@@ -20,13 +20,12 @@ class UserReviewController extends Controller
         ]);
     }
 
-   
-
     /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
     {
+        // Validate the input data
         $validatedData = $request->validate([
             'user_id' => 'required|exists:users,id',
             'order_line_id' => 'required|exists:order_lines,id',
@@ -34,6 +33,19 @@ class UserReviewController extends Controller
             'comment' => 'sometimes|nullable|string|max:1000',
         ]);
 
+        // Check if the user has already reviewed the same order line
+        $existingReview = \App\Models\UserReview::where('user_id', $validatedData['user_id'])
+                                                 ->where('order_line_id', $validatedData['order_line_id'])
+                                                 ->first();
+
+        if ($existingReview) {
+            return response()->json([
+                'success' => false,
+                'message' => 'User has already reviewed this order line.'
+            ], 400);
+        }
+
+        // Create the new review
         $userReview = \App\Models\UserReview::create($validatedData);
 
         return response()->json([
@@ -48,13 +60,8 @@ class UserReviewController extends Controller
      */
     public function show(string $id)
     {
-        $userReview = \App\Models\UserReview::find($id);
-        if (!$userReview) {
-            return response()->json([
-                'success' => false,
-                'message' => 'User Review not found'
-            ], 404);
-        }
+        // Find the user review by ID, or return a 404 if not found
+        $userReview = \App\Models\UserReview::with(['user', 'orderLine'])->findOrFail($id);
 
         return response()->json([
             'success' => true,
@@ -63,28 +70,21 @@ class UserReviewController extends Controller
         ]);
     }
 
-  
-
     /**
      * Update the specified resource in storage.
      */
     public function update(Request $request, string $id)
     {
-        $userReview = \App\Models\UserReview::find($id);
-        if (!$userReview) {
-            return response()->json([
-                'success' => false,
-                'message' => 'User Review not found'
-            ], 404);
-        }
+        // Find the user review by ID, or return a 404 if not found
+        $userReview = \App\Models\UserReview::findOrFail($id);
 
+        // Validate the input data
         $validatedData = $request->validate([
-            'user_id' => 'sometimes|exists:users,id',
-            'order_line_id' => 'sometimes|exists:order_lines,id',
-            'rating_value' => 'sometimes|integer|min:1|max:5',
+            'rating_value' => 'sometimes|required|integer|min:1|max:5',
             'comment' => 'sometimes|nullable|string|max:1000',
         ]);
 
+        // Update the review
         $userReview->update($validatedData);
 
         return response()->json([
@@ -99,14 +99,10 @@ class UserReviewController extends Controller
      */
     public function destroy(string $id)
     {
-        $userReview = \App\Models\UserReview::find($id);
-        if (!$userReview) {
-            return response()->json([
-                'success' => false,
-                'message' => 'User Review not found'
-            ], 404);
-        }
+        // Find the user review by ID, or return a 404 if not found
+        $userReview = \App\Models\UserReview::findOrFail($id);
 
+        // Delete the review
         $userReview->delete();
 
         return response()->json([
