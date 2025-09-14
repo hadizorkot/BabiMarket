@@ -10,11 +10,11 @@ class OrderStatus extends Model
     use HasFactory;
 
     protected $fillable = ['order_status'];
-    
 
     // OrderStatus has many ShopOrders
     public function shopOrders()
     {
-        return $this->hasMany(ShopOrder::class);
+        return $this->hasMany(ShopOrder::class, 'order_status');
     }
 }
+

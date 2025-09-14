@@ -12,7 +12,7 @@ class OrderStatusController extends Controller
      */
     public function index()
     {
-        
+        // Get all order statuses
         $orderStatuses = \App\Models\OrderStatus::all();
         return response()->json([
             'success' => true,
@@ -21,16 +21,17 @@ class OrderStatusController extends Controller
         ]);
     }
 
-
     /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
     {
+        // Validate the request data
         $validatedData = $request->validate([
             'order_status' => 'required|string|max:100|unique:order_statuses,order_status',
         ]);
 
+        // Create the order status
         $orderStatus = \App\Models\OrderStatus::create($validatedData);
 
         return response()->json([
@@ -60,9 +61,6 @@ class OrderStatusController extends Controller
         ]);
     }
 
-    
-    
-
     /**
      * Update the specified resource in storage.
      */
@@ -76,10 +74,12 @@ class OrderStatusController extends Controller
             ], 404);
         }
 
+        // Validate the request data
         $validatedData = $request->validate([
             'order_status' => 'required|string|max:100|unique:order_statuses,order_status,' . $id,
         ]);
 
+        // Update the order status
         $orderStatus->update($validatedData);
 
         return response()->json([
@@ -101,6 +101,9 @@ class OrderStatusController extends Controller
                 'message' => 'Order Status not found'
             ], 404);
         }
+
+        
+        $orderStatus->shopOrders()->update(['order_status' => null]);
 
         $orderStatus->delete();
 
