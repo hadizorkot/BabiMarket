@@ -15,6 +15,6 @@ class ShippingMethod extends Model
     // ShippingMethod has many ShopOrders
     public function shopOrders()
     {
-        return $this->hasMany(ShopOrder::class);
+        return $this->hasMany(ShopOrder::class, 'shipping_method_id');
     }
 }
