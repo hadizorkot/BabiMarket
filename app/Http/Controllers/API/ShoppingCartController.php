@@ -12,34 +12,48 @@ class ShoppingCartController extends Controller
      */
     public function index()
     {
-        
+        // Retrieve all shopping carts
         $shoppingCarts = \App\Models\ShoppingCart::all();
         return response()->json([
             'success' => true,
             'data' => $shoppingCarts,
             'message' => 'Shopping Carts retrieved successfully'
-        ]); 
-
+        ]);
     }
-
 
     /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
     {
-        
+        // Validate the request data
         $validatedData = $request->validate([
-            'user_id' => 'required|exists:users,id',
+            'user_id' => 'required|exists:users,id',  // Ensure the user exists
         ]);
 
-        $shoppingCart = \App\Models\ShoppingCart::create($validatedData);
+        // Check if the user already has a shopping cart
+        $existingCart = \App\Models\ShoppingCart::where('user_id', $request->user_id)->first();
+        if ($existingCart) {
+            return response()->json([
+                'success' => false,
+                'message' => 'User already has a shopping cart'
+            ], 400);
+        }
 
-        return response()->json([
-            'success' => true,
-            'data' => $shoppingCart,
-            'message' => 'Shopping Cart created successfully'
-        ], 201);
+        // Create a new shopping cart
+        try {
+            $shoppingCart = \App\Models\ShoppingCart::create($validatedData);
+            return response()->json([
+                'success' => true,
+                'data' => $shoppingCart,
+                'message' => 'Shopping Cart created successfully'
+            ], 201);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Error creating Shopping Cart: ' . $e->getMessage()
+            ], 500);
+        }
     }
 
     /**
@@ -47,6 +61,7 @@ class ShoppingCartController extends Controller
      */
     public function show(string $id)
     {
+        // Find the shopping cart by ID
         $shoppingCart = \App\Models\ShoppingCart::find($id);
         if (!$shoppingCart) {
             return response()->json([
@@ -55,20 +70,24 @@ class ShoppingCartController extends Controller
             ], 404);
         }
 
+        // Retrieve cart items if they exist
+        $cartItems = $shoppingCart->items;
         return response()->json([
             'success' => true,
-            'data' => $shoppingCart,
+            'data' => [
+                'shopping_cart' => $shoppingCart,
+                'items' => $cartItems
+            ],
             'message' => 'Shopping Cart retrieved successfully'
         ]);
     }
-
-    
 
     /**
      * Update the specified resource in storage.
      */
     public function update(Request $request, string $id)
     {
+        // Find the shopping cart by ID
         $shoppingCart = \App\Models\ShoppingCart::find($id);
         if (!$shoppingCart) {
             return response()->json([
@@ -77,17 +96,25 @@ class ShoppingCartController extends Controller
             ], 404);
         }
 
+        // Validate the request data
         $validatedData = $request->validate([
-            'user_id' => 'sometimes|exists:users,id',
+            'user_id' => 'sometimes|required|exists:users,id',
         ]);
 
-        $shoppingCart->update($validatedData);
-
-        return response()->json([
-            'success' => true,
-            'data' => $shoppingCart,
-            'message' => 'Shopping Cart updated successfully'
-        ]);
+        // Update the shopping cart
+        try {
+            $shoppingCart->update($validatedData);
+            return response()->json([
+                'success' => true,
+                'data' => $shoppingCart,
+                'message' => 'Shopping Cart updated successfully'
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Error updating Shopping Cart: ' . $e->getMessage()
+            ], 500);
+        }
     }
 
     /**
@@ -95,6 +122,7 @@ class ShoppingCartController extends Controller
      */
     public function destroy(string $id)
     {
+        // Find the shopping cart by ID
         $shoppingCart = \App\Models\ShoppingCart::find($id);
         if (!$shoppingCart) {
             return response()->json([
@@ -103,11 +131,19 @@ class ShoppingCartController extends Controller
             ], 404);
         }
 
-        $shoppingCart->delete();
-
-        return response()->json([
-            'success' => true,
-            'message' => 'Shopping Cart deleted successfully'
-        ]);
+        // Delete the shopping cart
+        try {
+            $shoppingCart->delete();
+            return response()->json([
+                'success' => true,
+                'message' => 'Shopping Cart deleted successfully'
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Error deleting Shopping Cart: ' . $e->getMessage()
+            ], 500);
+        }
     }
 }
+

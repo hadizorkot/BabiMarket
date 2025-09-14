@@ -13,13 +13,13 @@ class ShoppingCart extends Model
 
     // ShoppingCart belongs to User
     public function user()
-    {
+    {   
         return $this->belongsTo(User::class);
     }
 
     // ShoppingCart has many ShoppingCartItems
     public function items()
     {
-        return $this->hasMany(ShoppingCartItem::class);
+        return $this->hasMany(ShoppingCartItem::class)->onDelete('cascade'); // Cascade delete shopping cart items when cart is deleted
     }
 }
