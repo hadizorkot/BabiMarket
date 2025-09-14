@@ -12,7 +12,7 @@ class ShopOrderController extends Controller
      */
     public function index()
     {
-        
+        // Retrieve all shop orders
         $shopOrders = \App\Models\ShopOrder::all();
         return response()->json([
             'success' => true,
@@ -21,24 +21,38 @@ class ShopOrderController extends Controller
         ]);
     }
 
-    
-
     /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
     {
-        
+        // Validate the input data
         $validatedData = $request->validate([
             'user_id' => 'required|exists:users,id',
             'order_date' => 'required|date',
-            'payment_method_id' => 'required|exists:payment_types,id',
+            'payment_method_id' => 'required|exists:payment_methods,id',
             'shipping_address_id' => 'required|exists:addresses,id',
             'shipping_method_id' => 'required|exists:shipping_methods,id',
             'order_total' => 'required|numeric|min:0',
             'order_status' => 'required|exists:order_statuses,order_status',
         ]);
 
+        // Check if a similar order already exists for the user with the same shipping address, shipping method, and order date
+        $existingOrder = \App\Models\ShopOrder::where('user_id', $validatedData['user_id'])
+                                                ->where('shipping_address_id', $validatedData['shipping_address_id'])
+                                                ->where('shipping_method_id', $validatedData['shipping_method_id'])
+                                                ->where('order_date', $validatedData['order_date'])
+                                                ->first();
+
+        // If a duplicate order exists, return an error message
+        if ($existingOrder) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Duplicate order found with the same user, shipping address, shipping method, and order date.'
+            ], 400);
+        }
+
+        // If no duplicate is found, create the order
         $shopOrder = \App\Models\ShopOrder::create($validatedData);
 
         return response()->json([
@@ -53,7 +67,7 @@ class ShopOrderController extends Controller
      */
     public function show(string $id)
     {
-        $shopOrder = \App\Models\ShopOrder::find($id);
+        $shopOrder = \App\Models\ShopOrder::with(['paymentMethod', 'shippingMethod', 'orderStatus'])->find($id);
         if (!$shopOrder) {
             return response()->json([
                 'success' => false,
@@ -68,7 +82,6 @@ class ShopOrderController extends Controller
         ]);
     }
 
-
     /**
      * Update the specified resource in storage.
      */
@@ -82,16 +95,18 @@ class ShopOrderController extends Controller
             ], 404);
         }
 
+        // Validate the input data
         $validatedData = $request->validate([
-            'user_id' => 'sometimes|exists:users,id',
+            'user_id' => 'sometimes|required|exists:users,id',
             'order_date' => 'sometimes|date',
-            'payment_method_id' => 'sometimes|exists:payment_types,id',
-            'shipping_address_id' => 'sometimes|exists:addresses,id',
-            'shipping_method_id' => 'sometimes|exists:shipping_methods,id',
-            'order_total' => 'sometimes|numeric|min:0',
-            'order_status' => 'sometimes|exists:order_statuses,order_status',
+            'payment_method_id' => 'sometimes|required|exists:payment_methods,id',
+            'shipping_address_id' => 'sometimes|required|exists:addresses,id',
+            'shipping_method_id' => 'sometimes|required|exists:shipping_methods,id',
+            'order_total' => 'sometimes|required|numeric|min:0',
+            'order_status' => 'sometimes|required|exists:order_statuses,order_status',
         ]);
 
+        // Update the shop order
         $shopOrder->update($validatedData);
 
         return response()->json([
