@@ -12,7 +12,7 @@ class PaymentTypeController extends Controller
      */
     public function index()
     {
-        
+        // Retrieve all payment types
         $paymentTypes = \App\Models\PaymentType::all();
         return response()->json([
             'success' => true,
@@ -21,16 +21,17 @@ class PaymentTypeController extends Controller
         ]);
     }
 
-
     /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
     {
+        // Validate input
         $validatedData = $request->validate([
-            'value' => 'required|string|max:100|unique:payment_types,value',
+            'value' => 'required|string|max:100|unique:payment_types,value',  // Ensures value is unique
         ]);
 
+        // Create payment type
         $paymentType = \App\Models\PaymentType::create($validatedData);
 
         return response()->json([
@@ -45,7 +46,7 @@ class PaymentTypeController extends Controller
      */
     public function show(string $id)
     {
-        
+        // Find payment type by ID
         $paymentType = \App\Models\PaymentType::find($id);
         if (!$paymentType) {
             return response()->json([
@@ -61,14 +62,12 @@ class PaymentTypeController extends Controller
         ]);
     }
 
-    
-
     /**
      * Update the specified resource in storage.
      */
     public function update(Request $request, string $id)
     {
-        
+        // Find payment type by ID
         $paymentType = \App\Models\PaymentType::find($id);
         if (!$paymentType) {
             return response()->json([
@@ -77,10 +76,12 @@ class PaymentTypeController extends Controller
             ], 404);
         }
 
+        // Validate the input data
         $validatedData = $request->validate([
-            'value' => 'required|string|max:100|unique:payment_types,value,' . $id,
+            'value' => 'required|string|max:100|unique:payment_types,value,' . $id,  // Ensures uniqueness excluding the current record
         ]);
 
+        // Update the payment type
         $paymentType->update($validatedData);
 
         return response()->json([
@@ -95,7 +96,7 @@ class PaymentTypeController extends Controller
      */
     public function destroy(string $id)
     {
-        
+        // Find payment type by ID
         $paymentType = \App\Models\PaymentType::find($id);
         if (!$paymentType) {
             return response()->json([
@@ -104,6 +105,7 @@ class PaymentTypeController extends Controller
             ], 404);
         }
 
+        // Delete payment type
         $paymentType->delete();
 
         return response()->json([
