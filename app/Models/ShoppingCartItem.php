@@ -12,14 +12,14 @@ class ShoppingCartItem extends Model
     protected $fillable = ['shopping_cart_id', 'product_item_id', 'quantity'];
 
     // ShoppingCartItem belongs to ShoppingCart
-    public function shoppingCart()
+     public function shoppingCart()
     {
-        return $this->belongsTo(ShoppingCart::class);
+        return $this->belongsTo(ShoppingCart::class, 'shopping_cart_id')->onDelete('cascade'); // Cascade delete on shopping cart deletion
     }
 
     // ShoppingCartItem belongs to ProductItem
     public function productItem()
     {
-        return $this->belongsTo(ProductItem::class);
+        return $this->belongsTo(ProductItem::class, 'product_item_id')->onDelete('cascade'); // Cascade delete on product item deletion
     }
 }
