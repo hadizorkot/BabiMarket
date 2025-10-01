@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -14,7 +13,7 @@ class OrderStatus extends Model
     // OrderStatus has many ShopOrders
     public function shopOrders()
     {
-        return $this->hasMany(ShopOrder::class, 'order_status');
+        return $this->hasMany(ShopOrder::class, 'order_status_id');
     }
 }
 

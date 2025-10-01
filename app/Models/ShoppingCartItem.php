@@ -14,12 +14,12 @@ class ShoppingCartItem extends Model
     // ShoppingCartItem belongs to ShoppingCart
      public function shoppingCart()
     {
-        return $this->belongsTo(ShoppingCart::class, 'shopping_cart_id')->onDelete('cascade'); // Cascade delete on shopping cart deletion
+        return $this->belongsTo(ShoppingCart::class, 'shopping_cart_id');
     }
 
     // ShoppingCartItem belongs to ProductItem
     public function productItem()
     {
-        return $this->belongsTo(ProductItem::class, 'product_item_id')->onDelete('cascade'); // Cascade delete on product item deletion
+        return $this->belongsTo(ProductItem::class, 'product_item_id');
     }
 }

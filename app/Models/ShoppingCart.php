@@ -20,6 +20,6 @@ class ShoppingCart extends Model
     // ShoppingCart has many ShoppingCartItems
     public function items()
     {
-        return $this->hasMany(ShoppingCartItem::class)->onDelete('cascade'); // Cascade delete shopping cart items when cart is deleted
+        return $this->hasMany(ShoppingCartItem::class);
     }
 }

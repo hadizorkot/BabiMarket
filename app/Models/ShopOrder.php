@@ -10,7 +10,7 @@ class ShopOrder extends Model
     use HasFactory;
 
     protected $fillable = ['user_id', 'order_date',  
-    'payment_method_id', 'shipping_address_id', 'shipping_method_id', 'order_total', 'order_status'];
+    'payment_method_id', 'shipping_address_id', 'shipping_method_id', 'order_total', 'order_status_id'];
 
     // ShopOrder belongs to User
     public function user()
@@ -21,7 +21,7 @@ class ShopOrder extends Model
     // ShopOrder belongs to PaymentMethod
     public function paymentMethod()
     {
-        return $this->belongsTo(UserPaymentMethod::class);
+        return $this->belongsTo(PaymentMethod::class);
     }
 
     // ShopOrder belongs to ShippingMethod

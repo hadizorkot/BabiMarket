@@ -34,7 +34,7 @@ class ShopOrderController extends Controller
             'shipping_address_id' => 'required|exists:addresses,id',
             'shipping_method_id' => 'required|exists:shipping_methods,id',
             'order_total' => 'required|numeric|min:0',
-            'order_status' => 'required|exists:order_statuses,order_status',
+            'order_status_id' => 'required|exists:order_statuses,id',
         ]);
 
         // Check if a similar order already exists for the user with the same shipping address, shipping method, and order date
@@ -103,7 +103,7 @@ class ShopOrderController extends Controller
             'shipping_address_id' => 'sometimes|required|exists:addresses,id',
             'shipping_method_id' => 'sometimes|required|exists:shipping_methods,id',
             'order_total' => 'sometimes|required|numeric|min:0',
-            'order_status' => 'sometimes|required|exists:order_statuses,order_status',
+            'order_status_id' => 'sometimes|required|exists:order_statuses,order_status_id',
         ]);
 
         // Update the shop order

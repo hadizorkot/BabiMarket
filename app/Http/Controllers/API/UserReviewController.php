@@ -98,16 +98,27 @@ class UserReviewController extends Controller
      * Remove the specified resource from storage.
      */
     public function destroy(string $id)
-    {
-        // Find the user review by ID, or return a 404 if not found
-        $userReview = \App\Models\UserReview::findOrFail($id);
+{
+    // Find the user review by ID, or return a 404 if not found
+    $userReview = \App\Models\UserReview::find($id);
 
-        // Delete the review
-        $userReview->delete();
-
+    // If the user review doesn't exist, return a 404 error response
+    if (!$userReview) {
         return response()->json([
-            'success' => true,
-            'message' => 'User Review deleted successfully'
-        ]);
+            'success' => false,
+            'message' => 'User Review not found'
+        ], 404);
     }
+
+    // Delete the user review
+    $userReview->delete();
+
+    // Return success response
+    return response()->json([
+        'success' => true,
+        'message' => 'User Review deleted successfully'
+    ]);
+}
+
+
 }
